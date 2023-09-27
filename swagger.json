@@ -1,0 +1,71 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Teamknowlogy Challenge",
+    "description": "By Lorenzo Spallione",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/mutations": {
+      "post": {
+        "summary": "Verify DNA chain",
+        "tags": ["mutations"],
+        "responses": {
+          "200": {
+            "description": "Success request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "in": "body",
+          "name": "body",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "dna": {
+                "type": "array",
+                "description": "A DNA sequence array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "/stats": {
+      "get": {
+        "summary": "Obtain DNA stats",
+        "tags": ["stats"],
+        "responses": {
+          "200": {
+            "description": "Success request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count_mutations": {
+                  "type": "number"
+                },
+                "count_no_mutation": {
+                  "type": "number"
+                },
+                "ratio": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
