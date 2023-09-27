@@ -2,12 +2,12 @@ const admin = require("firebase/app");
 const { getFirestore } = require("firebase/firestore/lite");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCvYFOKuTJR8w_yl2jtDtA__8rT80FEXuk",
-  authDomain: "teamknowlogy-5130c.firebaseapp.com",
-  projectId: "teamknowlogy-5130c",
-  storageBucket: "teamknowlogy-5130c.appspot.com",
-  messagingSenderId: "33524884360",
-  appId: "1:33524884360:web:dde01f5a887dc90123d03d",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
 };
 
 const app = admin.initializeApp(firebaseConfig);
