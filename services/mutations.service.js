@@ -73,33 +73,43 @@ class MutationsService {
   }
 
   hasMutation(dnaChain) {
-    if (this._hasHorizontalMutation(dnaChain)) return true;
+    let total = 0;
+    total += this._horizontalMutation(dnaChain);
+    if (total > 1) return true;
     const matrix = this._dnaSequenceToMatrix(dnaChain);
-    if (this._hasVerticalMutation(matrix)) return true;
-    return this._hasDiagonalMutation(matrix);
+    total += this._verticalMutation(matrix);
+    if (total > 1) return true;
+    total += this._diagonalMutation(matrix);
+    return total > 1;
   }
 
-  _hasHorizontalMutation(dnaChain) {
-    return dnaChain.some((str) =>
-      this._possibleMutations.some((p) => str.includes(p))
-    );
+  _horizontalMutation(dnaChain) {
+    let count = 0;
+    for (const dna of dnaChain) {
+      if (this._possibleMutations.some((p) => dna.includes(p))) {
+        count++;
+      }
+    }
+    return count;
   }
 
-  _hasVerticalMutation(matrix) {
+  _verticalMutation(matrix) {
+    let count = 0;
     const length = matrix.length;
-    let hasMutation = false;
     for (let row = 0; row < length; row++) {
       let str = "";
       for (let col = 0; col < length; col++) {
         str += matrix[col][row];
       }
-      hasMutation = this._possibleMutations.some((p) => str.includes(p));
-      if (hasMutation) break;
+      if(this._possibleMutations.some((p) => str.includes(p))) {
+        count++;
+      }
     }
-    return hasMutation;
+    return count;
   }
 
-  _hasDiagonalMutation(matrix) {
+  _diagonalMutation(matrix) {
+    let count = 0;
     const length = matrix.length;
     const diagDesc = [];
     const diagAsc = [];
@@ -118,12 +128,15 @@ class MutationsService {
       diagDesc.push(strDesc);
       diagAsc.push(strAsc);
     }
-    return (
-      diagDesc.some((d) =>
-        this._possibleMutations.some((p) => d.includes(p))
-      ) ||
-      diagAsc.some((d) => this._possibleMutations.some((p) => d.includes(p)))
-    );
+    for (let i = 0; i < length*2-1; i++) {
+      if (this._possibleMutations.some(p => diagAsc[i].includes(p))) {
+        count++;
+      }
+      if (this._possibleMutations.some(p => diagDesc[i].includes(p))) {
+        count++;
+      }
+    }
+    return count;
   }
 
   _compareSequence(dna1, dna2) {
