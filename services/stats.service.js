@@ -1,10 +1,10 @@
 const { collection, getDocs } = require("firebase/firestore/lite");
 const { db } = require("../db");
-const col = collection(db, "mutation");
+const collec = collection(db, "mutation");
 
 class StatsService {
   async getStats() {
-    const data = await getDocs(col);
+    const data = await getDocs(collec);
     let count_mutations = 0;
     let count_no_mutations = 0;
     data.docs.forEach((doc) => {
