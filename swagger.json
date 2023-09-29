@@ -55,7 +55,7 @@
                 "count_mutations": {
                   "type": "number"
                 },
-                "count_no_mutation": {
+                "count_no_mutations": {
                   "type": "number"
                 },
                 "ratio": {

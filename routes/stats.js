@@ -1,8 +1,9 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
-const _statsService = require("../services/stats.service");
+const {StatsService} = require('../services/stats.service');
+const _statsService = new StatsService();
 
-router.get("/", async function (req, res, next) {
+router.get('/', async function (req, res, next) {
   try {
     const data = await _statsService.getStats();
     res.json(data);
