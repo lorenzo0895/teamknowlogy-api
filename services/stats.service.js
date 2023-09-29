@@ -1,9 +1,8 @@
-const { collection, getDocs } = require('firebase/firestore/lite');
-const { db } = require('../db');
-const col = collection(db, 'mutation');
+const { collection, getDocs } = require("firebase/firestore/lite");
+const { db } = require("../db");
+const col = collection(db, "mutation");
 
 class StatsService {
-
   async getStats() {
     const data = await getDocs(col);
     let count_mutations = 0;
@@ -12,10 +11,12 @@ class StatsService {
       if (doc.data().hasMutation) count_mutations += 1;
       else count_no_mutations += 1;
     });
+    const ratio =
+      count_no_mutations === 0 ? 0 : count_mutations / count_no_mutations;
     return {
       count_mutations,
       count_no_mutations,
-      ratio: count_no_mutations === 0 ? 0 : count_mutations / count_no_mutations,
+      ratio: Math.round(ratio * 100) / 100,
     };
   }
 }
